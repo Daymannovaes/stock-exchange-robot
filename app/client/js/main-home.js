@@ -1,5 +1,0 @@
-(function(undefined) {
-	"use strict";
-	
-
-})();

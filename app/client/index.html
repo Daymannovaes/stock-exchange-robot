@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="public/css/normalize.min.css">
 	<link rel="stylesheet" href="public/css/animate.css">
+
 	<link rel="stylesheet" href="public/css/main.css">
 
 	<link href='http://fonts.googleapis.com/css?family=Raleway:900,300' rel='stylesheet' type='text/css'>
@@ -17,16 +18,22 @@
 <body class="animated fadeIn">
 	<h1>
 		Stock Exchange Robot
-		<small>
+		<small class="animated fadeIn-300">
 			Simple Moving Average & Exponential Moving Average
 		</small>
 	</h1>
 
 	<section>
-		
+		<div id="container"></div>
+	</section>
+
+	<section id="data">
+		<div id="csv"></div>
 	</section>
 </body>
 	
 	<script src="public/bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="public/bower_components/highcharts/highcharts-custom.js"></script>
+
+	<script src="public/js/index.js"></script>
 </html>
