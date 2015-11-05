@@ -5,6 +5,7 @@ h1 {
   text-align: center;
 }
 
+
 .fadeIn-300 {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
