@@ -1,0 +1,68 @@
+<section>
+    <div class="btn-group-action">
+        <button class="btn" ng-click="addType = 'unit'" ng-class="{active: addType == 'unit'}">
+            Adicionar unidade
+        </button>
+        <button class="btn" ng-click="addType = 'user'" ng-class="{active: addType == 'user'}">
+            Adicionar usuário
+        </button>
+        <button class="btn" ng-click="addType = 'question'" ng-class="{active: addType == 'question'}">
+            Adicionar questão
+        </button>
+    </div>
+
+    <div class="admin-add-section col-sm-6">
+        <section class="animated fadeIn" ng-class="{fadeOut: addType != 'user'}" ng-hide="addType != 'user'">
+            <form role="form" name="userForm">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input ng-model="user.name" type="text" class="form-control" id="name" placeholder="Nome">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="required">Email</label>
+                    <input ng-model="user.email" type="email" class="form-control" id="email" placeholder="Email" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="age">Idade</label>
+                    <input ng-model="user.age" type="number" class="form-control" id="age" placeholder="Idade">
+                </div>
+                <div class="form-group">
+                    <label for="unit">Unidade</label>
+                    <input ng-model="user.unit" type="text" class="form-control" id="unit" placeholder="Unidade">
+                    <select>
+                        <option>soon</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="course">Curso</label>
+                    <input ng-model="user.course" type="text" class="form-control" id="course" placeholder="Curso">
+                    <select>
+                        <option>soon too</option>
+                    </select>
+                </div>
+            </form>
+        </section>
+
+        <section class="animated fadeIn" ng-class="{fadeOut: addType != 'question'}" ng-hide="addType != 'question'">
+            <form role="form" name="questionForm">
+                add question
+            </form>
+        </section>
+
+        <section class="animated fadeIn" ng-class="{fadeOut: addType != 'unit'}" ng-hide="addType != 'unit'">
+            <form role="form" name="unitForm">
+                add unit
+            </form>          
+        </section>
+
+        <button class="btn btn-success" ng-click="add(addType)"
+            ng-disabled="
+                (addType == 'user' && userForm.$invalid) ||
+                (addType == 'question' && questionForm.$invalid) ||
+                (addType == 'unit' && unitForm.$invalid)
+            ">
+            Adicionar
+        </button>
+    </div>
+
+</section>

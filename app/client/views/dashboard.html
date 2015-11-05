@@ -1,0 +1,17 @@
+<style type="text/css">
+	.tile.hover object:hover {
+		cursor: pointer;
+	    -webkit-filter: drop-shadow(3px 3px 1px #B2B2B7);
+	} 	
+</style>
+
+<aside class="filter lateral dashboard">
+	
+</aside>
+<section class="dashboard">
+	<div class="col-md-2 tile hover" ng-repeat="medal in medals">
+		<object type="image/svg+xml" data-toggle="tooltip"  data-placement="top" title="{{medal.name}}" data="public/views/svg/{{medal.imageHash}}.svg" class="logo">
+		  	{medal image}
+		</object>
+	</div>
+</section>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Chromos - Teste</title>
+    <meta name="description" content="Sistema de recompensa">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="public/css/normalize.min.css">
+    <link rel="stylesheet" href="public/css/animate.css">
+
+    <link rel="stylesheet" href="public/css/site.css">
+    
+    <link href='http://fonts.googleapis.com/css?family=Raleway:800,300' rel='stylesheet' type='text/css'>
+
+
+</head>
+<body class="animated fadeIn">
+    <nav>
+        <ul>
+            <li ng-class="{active: $root.$path == 'dashboard'}">
+                <a href="#/dashboard">Dashboard</a>    
+            </li>
+            <li ng-class="{active: $root.$path == 'ranking'}">
+                <a href="#/ranking">Ranking</a>    
+            </li>
+            <li ng-class="{active: $root.$path == 'question'}">
+                <a href="#/question">Pergunta</a>    
+            </li>
+            <li ng-class="{active: $root.$path == 'profile'}">
+                <a href="#/profile">Perfil</a>    
+            </li>
+
+            <li ng-class="{active: $root.$path == 'admin'}" ng-if="$root.user.isAdmin">
+                <a href="#/admin">Admin</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section ng-view></section>
+    </main>
+</body>
+	
+	<script src="public/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<script data-main="public/js/main-site.js"
+            src="public/bower_components/requirejs/require.js"></script>
+</html>
