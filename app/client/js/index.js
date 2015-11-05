@@ -10,7 +10,7 @@
         },
         yAxis: {
             title: {
-                text: 'Share prices'
+                text: 'Date'
             }
         },
         plotOptions: {
@@ -21,10 +21,10 @@
             }
         },
         title: {
-            text: 'Royal Mail shares over time'
+            text: 'ITUB4'
         },
         subtitle: {
-            text: 'Auto-detection of <em>mm/dd/YYYY</em> dates in Highcharts Data module'
+            text: ''
         }
     });
 	});

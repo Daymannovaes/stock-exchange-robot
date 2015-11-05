@@ -1,4 +1,4 @@
-datahora,fechamento_atual
+datahora,Fechamento Atual
 2008-01-02- 11:00,20.06
 2008-01-02- 11:15,20,20
 2008-01-02- 11:30,20.03
