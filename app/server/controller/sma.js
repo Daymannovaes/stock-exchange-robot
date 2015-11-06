@@ -36,8 +36,10 @@ var calcSmaByLines = function(period) {
 	return function (line) {
 		lineCount++;
 
-		if(lineCount == 1)
+		if(lineCount == 1) {
+			fs.write(output, line + "\n");
 			return;
+		}
 
 		var value = line.substr(line.indexOf(",") + 1);
 		partial += parseFloat(value);

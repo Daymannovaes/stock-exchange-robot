@@ -23,6 +23,27 @@
 		</small>
 	</h1>
 
+	<div class="filter align" id="filter">
+		<h3>
+			Simple Moving Average
+		</h3>
+
+		<div>
+			<label for="stock"><strong>Stock</strong></label>
+			<input type="text" placeholder="stock name" name="stock" id="stock" />
+		</div>
+		<div>
+			<label for="period"><strong>Period</strong></label>
+			<input type="number" placeholder="20" name="period" id="period" />
+		</div>
+		<div>
+			<label for="mini"><strong>Mini?</strong></label>
+			<input type="checkbox" name="mini" checked="checked" id="mini" />
+			<input type="button"  value="Pesquisar" id="search" style="margin-left:14px" />
+			<input type="button"  value="Construir" id="build" />
+		</div>
+	</div>
+
 	<section>
 		<div id="container"></div>
 	</section>

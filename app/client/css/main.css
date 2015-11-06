@@ -5,6 +5,32 @@ h1 {
   text-align: center;
 }
 
+.filter {
+	max-width: 400px;
+	margin: 50px 50px 0;
+	padding: 30px;
+
+	border: 1px solid #EEE;
+}
+.filter h3 {
+	margin-top: 0;
+}
+.filter.align input {
+	float: right;
+    border: 1px solid #888;
+	padding: 2px 12px;
+}
+.filter.align input[type="checkbox"] {
+	float: none;
+	margin-left: 10px;
+}
+
+.filter.align input[type="button"] {
+	background: #AAA;
+    color: #FFF;
+    padding: 3px 10px;
+}
+
 
 .fadeIn-300 {
   -webkit-animation-name: fadeIn;
