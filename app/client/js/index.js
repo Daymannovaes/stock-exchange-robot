@@ -1,7 +1,7 @@
 (function(undefined) {
 	"use strict";
 	
-	$.get("public/candles_ibov_itub4_mini.csv", function(data) {
+	$.get("public/candles/candles_ibov_itub4_mini.txt", function(data) {
 		//$("#csv").html(data);
 		$('#container').highcharts({
         data: {
