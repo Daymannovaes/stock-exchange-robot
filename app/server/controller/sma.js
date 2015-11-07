@@ -37,7 +37,7 @@ var calcSmaByLines = function(period) {
 		lineCount++;
 
 		if(lineCount == 1) {
-			fs.write(output, line + "\n");
+			fs.write(output, "[\n");
 			return;
 		}
 
@@ -46,7 +46,7 @@ var calcSmaByLines = function(period) {
 
 		if(lineCount%period == 0) {
 			var dateTime = line.substr(0, line.indexOf(","));
-			newLine = dateTime + "," + partial/period + "\n";
+			newLine = "    [\"" + dateTime + "\"," + partial/period + "],\n";
 
 			fs.write(output, newLine);
 			partial = 0;
@@ -89,6 +89,7 @@ Controller.index = function(req, res) {
 
 	rl.on("line", calcSmaByLines.call(fileOutputStream, period))
 	  .on("close", function() {
+  		  fs.write(fileOutputStream, "]");
 		  console.log("\n\tend of file %s", inputFile);
 		  console.log("\n\twrote to: %s", outputFile);
 		  

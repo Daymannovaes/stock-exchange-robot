@@ -27,30 +27,58 @@ $(document).ready(function(undefined) {
         url += ".txt";
 
         $.get(url, function(data) {
-            $('#container').highcharts({
-                data: {
-                    csv: data,
-                    dateFormat: "YYYY-mm-dd"
+            data = data.substr(0, data.lastIndexOf(",")) + "]";
+            $('#container').highcharts('StockChart', {
+                rangeSelector : {
+                    selected : 1
                 },
-                yAxis: {
-                    title: {
-                        text: 'Date'
-                    }
+
+                title : {
+                    text : stock
                 },
-                plotOptions: {
-                    series: {
-                        marker: {
-                            enabled: false
-                        }
-                    }
-                },
-                title: {
-                    text: stock.toUpperCase()
-                },
-                subtitle: {
-                    text: ''
-                }
+                series : [{
+                    name : period,
+                    data : JSON.parse(data), //array of arrays
+                    tooltip: {
+                        valueDecimals: 2
+                    },
+                    turboThreshold: 0
+                }]
             });
         });
     });
 })
+
+/*
+        $.get("public/candles/candles_ibov_itub4_mini_period30.txt", function(data1) {
+        $.get("public/candles/candles_ibov_itub4_mini_period50.txt", function(data2) {
+            data1 = data1.substr(0, data1.lastIndexOf(",")) + "]";
+            data2 = data2.substr(0, data2.lastIndexOf(",")) + "]";
+            $('#container').highcharts('StockChart', {
+                rangeSelector : {
+                    selected : 1
+                },
+
+                title : {
+                    text : 'itub4'
+                },
+                series : [{
+                    name : '20',
+                    data : JSON.parse(data1), //array of arrays
+                    tooltip: {
+                        valueDecimals: 2
+                    },
+                    turboThreshold: 0
+                },
+{
+                    name : '300',
+                    data : JSON.parse(data2), //array of arrays
+                    tooltip: {
+                        valueDecimals: 2
+                    },
+                    turboThreshold: 0
+                }]
+            });
+        });
+    });
+*/
