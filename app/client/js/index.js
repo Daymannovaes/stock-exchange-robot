@@ -27,7 +27,7 @@ $(document).ready(function(undefined) {
         url += ".txt";
 
         $.get(url, function(data) {
-            data = data.substr(0, data.lastIndexOf(",")) + "]";
+            data = data.substr(0, data.length-2) + "]";
             $('#container').highcharts('StockChart', {
                 rangeSelector : {
                     selected : 1
