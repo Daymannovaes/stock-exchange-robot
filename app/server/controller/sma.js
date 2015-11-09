@@ -47,8 +47,8 @@ var calcSmaByLines = function(period) {
 		if(lineCount%period == 0) {
 			var dateTime = line.substr(0, line.indexOf(","));
 			dateTime = (new Date(dateTime)).getTime();
-			
-			newLine = "    [" + dateTime + "," + partial/period + "],\n";
+
+			newLine = "[" + dateTime + "," + partial/period + "],\n";
 
 			fs.write(output, newLine);
 			partial = 0;
