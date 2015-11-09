@@ -38,3 +38,8 @@ h1 {
   -webkit-animation-delay: 300ms;
   animation-delay: 300ms;
 }
+
+ul li {
+	display: inline;
+	margin-left: 30px;
+}

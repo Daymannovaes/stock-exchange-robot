@@ -13,18 +13,18 @@ $(document).ready(function(undefined) {
     });
     
     $filter.find("#search").click(function() {
-        var stock = $filter.find("#stock").val().toLowerCase();
-        var period = parseInt($filter.find("#period").val());
-        var mini = $filter.find("#mini").is(":checked");
+        var stock = "itub4";
+        var periods = $filter.find("input[type='checkbox']:checked");
 
-        var url = "public/candles/candles_ibov_" + stock;
-        if(mini)
-            url += "_mini";
+        var urlBase = "public/candles/candles_ibov_" + stock + "_mini_";
 
-        if(!isNaN(period) && period)
-            url += "_period" + period;
+        var urls = [];
+        periods.map(function(a, b){
+            urls.push($.get(urlBase + b.name + ".txt"));
+        });
 
-        url += ".txt";
+        $.when.apply(this, urls).done();
+        return;
 
         $.get(url, function(data) {
             data = data.substr(0, data.length-2) + "]";
@@ -50,10 +50,16 @@ $(document).ready(function(undefined) {
 })
 
 /*
-        $.get("public/candles/candles_ibov_itub4_mini_period30.txt", function(data1) {
-        $.get("public/candles/candles_ibov_itub4_mini_period50.txt", function(data2) {
+$.when(
+    $.get("public/candles/candles_ibov_itub4_mini_period30.txt"),
+    $.get("public/candles/candles_ibov_itub4_mini_period200.txt"),
+    $.get("public/candles/candles_ibov_itub4_mini_period500.txt")).done(function(data1, data2, data3){
+            data1 = data1[0];
+            data2 = data2[0];
+            data3 = data3[0];
             data1 = data1.substr(0, data1.lastIndexOf(",")) + "]";
             data2 = data2.substr(0, data2.lastIndexOf(",")) + "]";
+            data3 = data3.substr(0, data3.lastIndexOf(",")) + "]";
             $('#container').highcharts('StockChart', {
                 rangeSelector : {
                     selected : 1
@@ -63,22 +69,28 @@ $(document).ready(function(undefined) {
                     text : 'itub4'
                 },
                 series : [{
-                    name : '20',
+                    name : '30',
                     data : JSON.parse(data1), //array of arrays
                     tooltip: {
                         valueDecimals: 2
                     },
                     turboThreshold: 0
                 },
-{
-                    name : '300',
+                {
+                    name : '200',
                     data : JSON.parse(data2), //array of arrays
                     tooltip: {
                         valueDecimals: 2
                     },
                     turboThreshold: 0
+                },
+                {
+                    name : '500',
+                    data : JSON.parse(data3), //array of arrays
+                    tooltip: {
+                        valueDecimals: 2
+                    },
+                    turboThreshold: 0
                 }]
-            });
-        });
-    });
+            });});
 */
