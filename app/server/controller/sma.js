@@ -26,7 +26,7 @@ var buildUrlOutput = function(query, period) {
 	return url;
 }
 
-var calcSmaByLines = function(period) {
+var calcSmaByLines = function(period, lastLineObj) {
 	var output = this; //passed with .call(fileOutputStream, [...]);
 
 	var lineCount = 0,
@@ -44,6 +44,7 @@ var calcSmaByLines = function(period) {
 		var value = line.substr(line.indexOf(",") + 1);
 		partial += parseFloat(value);
 
+		lastLineObj.line = line + "|" + partial/(lineCount%period);
 		if(lineCount%period == 0) {
 			var dateTime = line.substr(0, line.indexOf(","));
 			dateTime = (new Date(dateTime)).getTime();
@@ -52,6 +53,7 @@ var calcSmaByLines = function(period) {
 
 			fs.write(output, newLine);
 			partial = 0;
+			lastLineObj.line = 0;
 		}
 
 	};
@@ -89,8 +91,21 @@ Controller.index = function(req, res) {
     	terminal: false
 	});
 
-	rl.on("line", calcSmaByLines.call(fileOutputStream, period))
+	var lastLineObj = {
+		line: 0
+	};
+	rl.on("line", calcSmaByLines.call(fileOutputStream, period, lastLineObj))
 	  .on("close", function() {
+	  	  if(lastLineObj.line) {
+	  	  	var dateTime = lastLineObj.line.substr(0, lastLineObj.line.indexOf("|"));
+	  	  	dateTime = dateTime.substr(0, dateTime.indexOf(","));
+			dateTime = (new Date(dateTime)).getTime();
+
+			console.log("\n\n\t\tLAST PERIOD: %s", lastLineObj.line);
+
+			var newLine = "[" + dateTime + "," + lastLineObj.line.substr(lastLineObj.line.indexOf("|")+1) + "],\n";
+			fs.write(fileOutputStream, newLine);
+	  	  }
   		  fs.write(fileOutputStream, "]");
 		  console.log("\n\tend of file %s", inputFile);
 		  console.log("\n\twrote to: %s", outputFile);
