@@ -1,9 +1,11 @@
 "use strict";
 
 var Sma = require("./sma");
+var Cross = require("./cross");
 
 var Controller = {
-	Sma: Sma
+	Sma: Sma,
+	Cross: Cross
 };
 
 Controller.index = function(req, res) {

@@ -8,6 +8,8 @@ var Route = function(app, express) {
 	app.get("/", controller.index);
 
 	app.get("/sma", controller.Sma.index);
+	
+	app.get("/cross", controller.Cross.index);
 
 	/*
 	app.get("/users", controller.User.getAll);
