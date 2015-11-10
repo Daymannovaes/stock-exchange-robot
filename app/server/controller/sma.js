@@ -51,7 +51,7 @@ var calcSmaByLines = function(period, lastLineObj) {
 
 			newLine = "[" + dateTime + "," + partial/period + "],\n";
 
-			fs.write(output, newLine);
+			fs.writeSync(output, newLine);
 			partial = 0;
 			lastLineObj.line = 0;
 		}
@@ -104,9 +104,9 @@ Controller.index = function(req, res) {
 			console.log("\n\n\t\tLAST PERIOD: %s", lastLineObj.line);
 
 			var newLine = "[" + dateTime + "," + lastLineObj.line.substr(lastLineObj.line.indexOf("|")+1) + "],\n";
-			fs.write(fileOutputStream, newLine);
+			fs.writeSync(fileOutputStream, newLine);
 	  	  }
-  		  fs.write(fileOutputStream, "]");
+  		  fs.writeSync(fileOutputStream, "]");
 		  console.log("\n\tend of file %s", inputFile);
 		  console.log("\n\twrote to: %s", outputFile);
 		  
