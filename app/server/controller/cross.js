@@ -23,7 +23,83 @@ var findStockByTime = function(stock, time) {
 	}
 	return null;
 }
+var getPN = function(serie, time) {
+	for(var i=1; i<serie.length; i++) {
+		if(serie[i][0] >= time) {
+			return {
+				previous: serie[i-1],
+				next: serie[i]
+			}
+		}
+	}
+};
+var relativePosition = function(p1, p2, p) {
+	var x=0, y=1;
+	var xDelta = p2[x] - p1[x];
+	var yDelta = p2[y] - p1[y];
 
+	var xDiff = p[x] - p1[x];
+	var percentDiff = xDiff / xDelta;
+
+	var relativeY = p1[y] + (yDelta * percentDiff);
+
+	return [p[x], relativeY];
+}
+var relativePositionIsUp = function(p1, p2, p) {
+	var y=1;
+	var relativeP = relativePosition(p1, p2, p);
+
+	return p1[y] >= relativeP[y];
+}
+var readAllFilesAndCross = function(files, periods, res) {
+	readAllFiles(files, function(err, results) {
+	    for(var i=0; i<results.length; i++) {
+	    	var result = results[i].toString();
+
+	    	result = result.substr(0, result.lastIndexOf(",")) + "]";
+	    	result = JSON.parse(result);
+
+	    	results[i] = result;
+	    }
+
+	    var serie1 = results[0];
+	    var serie2 = results[1];
+
+	    var lastIsUp,
+	    	actualIsUp,
+	    	relativeP;
+	    for(i=0; i<results[0].length; i++) {
+	    	var pn = getPN(serie2, serie1[i][0]);
+	    	actualIsUp = !relativePositionIsUp(pn.previous, pn.next, serie1[i]);
+
+	    	if(lastIsUp != undefined && lastIsUp && !actualIsUp){
+	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
+	    		console.log("\n\n\n\tCruzamento de descida entre %d e %d, em (%d,%d)",
+	    			periods[0], periods[1],
+	    			relativeP[0], parseInt(relativeP[1]*1000)/1000);
+	    		console.log("\n\t   O ponto comparado foi (period%d) (%d,%d)",
+	    			periods[0],
+	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);
+	    	}
+	    	if(lastIsUp != undefined && !lastIsUp && actualIsUp) {
+	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
+	    		console.log("\n\n\n\tCruzamento de subida entre %d e %d, em (%d,%d)",
+	    			periods[0], periods[1],
+	    			relativeP[0], parseInt(relativeP[1]*1000)/1000);
+	    		console.log("\n\t   O ponto comparado foi (period%d) (%d,%d)",
+	    			periods[0],
+	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);
+	    	}
+
+	    	lastIsUp = actualIsUp;
+	    }
+
+	    res.status(200).send("Done, check console");
+	});
+};
+var readAllFiles = function(files, callback) {
+	async.map(files, fs.readFile, callback);
+};
 
 var Controller = {};
 Controller.index = function(req, res) {
@@ -45,25 +121,7 @@ Controller.index = function(req, res) {
 
 	//necessarily, the first results is more volatily than lasts,
 	//because the "periods" are sorted before
-	async.map(files, fs.readFile, function(err, results) {
-	    for(var i=0; i<results.length; i++) {
-	    	var result = results[i].toString();
-
-	    	result = result.substr(0, result.lastIndexOf(",")) + "]";
-	    	result = JSON.parse(result);
-
-	    	results[i] = result;
-	    }
-
-	    var lastGreater = results[0][1] > results[1][1];
-	    for(i=0; i<results[0].length; i++) {
-	    	var previous = getPrevious(results[1], results[0][0]);
-	    	var next = getNext(results[1], results[0][0]);
-	    	
-	    }
-
-	    res.status(200).send("??");
-	});
+	readAllFilesAndCross(files, periods, res);
 };
 
 module.exports = Controller;
