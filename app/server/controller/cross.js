@@ -51,7 +51,7 @@ var relativePositionIsUp = function(p1, p2, p) {
 
 	return p1[y] >= relativeP[y];
 }
-var readAllFilesAndCross = function(files, periods, res) {
+var readAllFilesAndCross = function(files, periods, callback) {
 	readAllFiles(files, function(err, results) {
 	    for(var i=0; i<results.length; i++) {
 	    	var result = results[i].toString();
@@ -65,6 +65,9 @@ var readAllFilesAndCross = function(files, periods, res) {
 	    var serie1 = results[0];
 	    var serie2 = results[1];
 
+	    var up = 0,
+	    	down = 0;
+
 	    var lastIsUp,
 	    	actualIsUp,
 	    	relativeP;
@@ -73,6 +76,8 @@ var readAllFilesAndCross = function(files, periods, res) {
 	    	actualIsUp = !relativePositionIsUp(pn.previous, pn.next, serie1[i]);
 
 	    	if(lastIsUp != undefined && lastIsUp && !actualIsUp){
+	    		down++;
+	    		
 	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
 	    		console.log("\n\n\n\tCruzamento de descida entre %d e %d, em (%d,%d)",
 	    			periods[0], periods[1],
@@ -82,6 +87,8 @@ var readAllFilesAndCross = function(files, periods, res) {
 	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);
 	    	}
 	    	if(lastIsUp != undefined && !lastIsUp && actualIsUp) {
+	    		up++;
+	    		
 	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
 	    		console.log("\n\n\n\tCruzamento de subida entre %d e %d, em (%d,%d)",
 	    			periods[0], periods[1],
@@ -94,7 +101,11 @@ var readAllFilesAndCross = function(files, periods, res) {
 	    	lastIsUp = actualIsUp;
 	    }
 
-	    res.status(200).send("Done, check console");
+	    callback({
+	    	status: 200,
+	    	up: up,
+	    	down: down
+	   	});
 	});
 };
 var readAllFiles = function(files, callback) {
@@ -121,7 +132,11 @@ Controller.index = function(req, res) {
 
 	//necessarily, the first results is more volatily than lasts,
 	//because the "periods" are sorted before
-	readAllFilesAndCross(files, periods, res);
+	readAllFilesAndCross(files, periods, function(params) {
+		res.status(params.status || 200).send("Done, check console. Crossings: " + (params.up+params.down));
+
+		console.log("\n\n\n\n\n\t\t\tup: %d, down: %d, cross: %d", params.up, params.down, params.up+params.down);
+	});
 };
 
 module.exports = Controller;
