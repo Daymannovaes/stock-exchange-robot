@@ -71,6 +71,11 @@ var readAllFilesAndCross = function(files, periods, callback) {
 	    var lastIsUp,
 	    	actualIsUp,
 	    	relativeP;
+
+	    var lastValue;
+	    var losesCount = 0, gainsCount = 0;
+	    var loses = 0;
+	    var gains = 0;
 	    for(i=0; i<results[0].length; i++) {
 	    	var pn = getPN(serie2, serie1[i][0]);
 	    	actualIsUp = !relativePositionIsUp(pn.previous, pn.next, serie1[i]);
@@ -79,23 +84,38 @@ var readAllFilesAndCross = function(files, periods, callback) {
 	    		down++;
 	    		
 	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
-	    		console.log("\n\n\n\tCruzamento de descida entre %d e %d, em (%d,%d)",
+
+
+
+	    		/*console.log("\n\n\n\tCruzamento de descida entre %d e %d, em (%d,%d)",
 	    			periods[0], periods[1],
 	    			relativeP[0], parseInt(relativeP[1]*1000)/1000);
 	    		console.log("\n\t   O ponto comparado foi (period%d) (%d,%d)",
 	    			periods[0],
 	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);
+*/
+	    		if(relativeP[1] - lastValue < 0) {
+	    			console.log("\n\t\tPerda por ação: R$%d",  - relativeP[1] + lastValue);
+	    			loses += - relativeP[1] + lastValue;
+	    			losesCount++;
+	    		}
+	    		else if(!isNaN(lastValue)){
+	    			console.log("\n\tGanho por ação: R$%d", relativeP[1] - lastValue);
+	    			gains += relativeP[1] - lastValue;
+	    			gainsCount++;
+	    		}
 	    	}
 	    	if(lastIsUp != undefined && !lastIsUp && actualIsUp) {
 	    		up++;
 	    		
 	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
-	    		console.log("\n\n\n\tCruzamento de subida entre %d e %d, em (%d,%d)",
+	    		lastValue = relativeP[1];
+	    		/*console.log("\n\n\n\tCruzamento de subida entre %d e %d, em (%d,%d)",
 	    			periods[0], periods[1],
 	    			relativeP[0], parseInt(relativeP[1]*1000)/1000);
 	    		console.log("\n\t   O ponto comparado foi (period%d) (%d,%d)",
 	    			periods[0],
-	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);
+	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);*/
 	    	}
 
 	    	lastIsUp = actualIsUp;
@@ -104,7 +124,11 @@ var readAllFilesAndCross = function(files, periods, callback) {
 	    callback({
 	    	status: 200,
 	    	up: up,
-	    	down: down
+	    	down: down,
+	    	loses: loses,
+	    	gains: gains,
+	    	losesCount: losesCount,
+	    	gainsCount: gainsCount
 	   	});
 	});
 };
@@ -136,6 +160,12 @@ Controller.index = function(req, res) {
 		res.status(params.status || 200).send("Done, check console. Crossings: " + (params.up+params.down));
 
 		console.log("\n\n\n\n\n\t\t\tup: %d, down: %d, cross: %d", params.up, params.down, params.up+params.down);
+		
+		console.log("\n\n\t\t\tPerda total: R$%d", params.loses);
+		console.log("\n\t\t\t\tErros: %d", params.losesCount);
+		console.log("\n\t\t\tGanho total: R$%d", params.gains);
+		console.log("\n\t\t\t\tAcertos: %d", params.gainsCount);
+		console.log("\n\t\t\tResultado final: R$%d", params.gains - params.loses);
 	});
 };
 
