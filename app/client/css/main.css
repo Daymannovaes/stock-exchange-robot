@@ -9,6 +9,7 @@ h1 {
 	max-width: 400px;
 	margin: 50px 50px 0;
 	padding: 30px;
+	display: inline-block;
 
 	border: 1px solid #EEE;
 }
@@ -25,10 +26,22 @@ h1 {
 	margin-left: 10px;
 }
 
-.filter.align input[type="button"] {
-	background: #AAA;
+.btn2 {
+    background: #4E586D;
     color: #FFF;
-    padding: 3px 10px;
+    padding: 6px 12px !important;
+    border: 1px solid #212631;
+    border-radius: 5px;
+
+    outline: none !important;
+}
+.btn2:hover {
+	transition: 200ms all;
+    background: #212631;
+    color: #FFF;
+    padding: 6px 12px !important;
+    border: 1px solid #212631;
+    border-radius: 5px;
 }
 
 

@@ -23,17 +23,19 @@ var buildUrlOutput = function(query, period) {
 	url = url.substr(0, url.indexOf(".txt")); //remove .txt at the end
 
 	url += "_period" + period + ".txt";
-	
-	url = url.replace('/candles/', '/candles/sma/');
+
+	url = url.replace('/candles/', '/candles/ema/');
 	return url;
 }
 
-var calcSmaByLines = function(period, lastLineObj) {
+var calcEmaByLines = function(period, lastLineObj) {
 	var output = this; //passed with .call(fileOutputStream, [...]);
+	period = parseInt(period);
 
 	var lineCount = 0,
 		partial = 0,
-		newLine;
+		newLine,
+		denominator = (period*period + period) / 2;
 
 	return function (line) {
 		lineCount++;
@@ -44,14 +46,14 @@ var calcSmaByLines = function(period, lastLineObj) {
 		}
 
 		var value = line.substr(line.indexOf(",") + 1);
-		partial += parseFloat(value);
+		partial += parseFloat(value) * (((lineCount-1)%period)+1);
 
-		lastLineObj.line = line + "|" + partial/(lineCount%period);
+		lastLineObj.line = line + "|" + partial/(((lineCount%period)*((lineCount%period)+1))/2);
 		if(lineCount%period == 0) {
 			var dateTime = line.substr(0, line.indexOf(","));
 			dateTime = (new Date(dateTime)).getTime();
 
-			newLine = "[" + dateTime + "," + partial/period + "],\n";
+			newLine = "[" + dateTime + "," + partial/denominator + "],\n";
 
 			fs.writeSync(output, newLine);
 			partial = 0;
@@ -96,7 +98,7 @@ Controller.index = function(req, res) {
 	var lastLineObj = {
 		line: 0
 	};
-	rl.on("line", calcSmaByLines.call(fileOutputStream, period, lastLineObj))
+	rl.on("line", calcEmaByLines.call(fileOutputStream, period, lastLineObj))
 	  .on("close", function() {
 	  	  if(lastLineObj.line) {
 	  	  	var dateTime = lastLineObj.line.substr(0, lastLineObj.line.indexOf("|"));

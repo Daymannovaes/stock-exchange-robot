@@ -1,10 +1,12 @@
 "use strict";
 
-var Sma = require("./sma");
+var sma = require("./sma");
+var ema = require("./ema");
 var Cross = require("./cross");
 
 var Controller = {
-	Sma: Sma,
+	sma: sma,
+	ema: ema,
 	Cross: Cross
 };
 

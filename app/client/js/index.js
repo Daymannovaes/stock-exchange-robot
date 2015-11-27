@@ -16,30 +16,44 @@ $(document).ready(function(undefined) {
         return response.substr(0, response.lastIndexOf(",")) + "]";
     };
 
-    var $filter = $("#filter");
+    var $filter_sma = $("#filter_sma");
+    var $filter_ema = $("#filter_ema");
 
-    $filter.find("#build").click(function() {
-        var periods = $filter.find("input[type='checkbox']:checked");
+    $("#build").click(function() {
+        var periods_sma = $filter_sma.find("input[type='checkbox']:checked");
+        var periods_ema = $filter_ema.find("input[type='checkbox']:checked");
 
-        var urlBase = "sma?stock=" + stock + "&period=";
+        var urlBase_sma = "sma?stock=" + stock + "&period=";
+        var urlBase_ema = "ema?stock=" + stock + "&period=";
 
-        var urls = [];
-        for(var i=0; i<periods.length; i++) {
-            $.get(urlBase + periods[i].name.substr(6), function() {
-                console.log(periods[i].name + " done");
+        for(var i=0; i<periods_sma.length; i++) {
+            $.get(urlBase_sma + periods_sma[i].name.substr(6), function() {
+                console.log(periods_sma[i].name + " done");
+            });
+        }
+        for(var i=0; i<periods_ema.length; i++) {
+            $.get(urlBase_ema + periods_ema[i].name.substr(6), function() {
+                console.log(periods_ema[i].name + " done");
             });
         }
     });
     
-    $filter.find("#search").click(function() {
-        var periods = $filter.find("input[type='checkbox']:checked");
+    $("#search").click(function() {
+        var periods_sma = $filter_sma.find("input[type='checkbox']:checked");
+        var periods_ema = $filter_ema.find("input[type='checkbox']:checked");
 
-        var urlBase = "public/candles/candles_ibov_" + stock + "_mini_";
+        var urlBase_sma = "public/candles/sma/candles_ibov_" + stock + "_mini_";
+        var urlBase_ema = "public/candles/ema/candles_ibov_" + stock + "_mini_";
 
         var urls = [];
 
-        for(var i=0; i<periods.length; i++)
-            urls.push($.get(urlBase + periods[i].name + ".txt"));
+        for(var i=0; i<periods_sma.length; i++)
+            urls.push($.get(urlBase_sma + periods_sma[i].name + ".txt"));
+        for(var i=0; i<periods_ema.length; i++)
+            urls.push($.get(urlBase_ema + periods_ema[i].name + ".txt"));
+        if($("#showStock").is(":checked")) {
+            urls.push($.get("public/candles/candles_ibov_itub4_mini_period1.txt"));
+        }
 
         $.when.apply(this, urls).done(function() {
             var args = Array.prototype.slice.call(arguments),
@@ -48,7 +62,6 @@ $(document).ready(function(undefined) {
             args = normalizeResponses(args);
             for(var i=0; i<args.length; i++) {
                 series.push({
-                    name : periods[i].name,
                     data : JSON.parse(args[i]), //array of arrays
                     tooltip: {
                         valueDecimals: 2
