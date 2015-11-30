@@ -4,11 +4,11 @@ var async = require("async");
 var fs = require("fs");
 
 var stock = "itub4";
-var getFileUrl = function(period, _stock) {
+var getFileUrl = function(period, _stock, type) {
 
 	var stock = _stock.toLowerCase() || stock;
 
-	var url = "app/client/candles/candles_ibov_" +
+	var url = "app/client/candles/" + type + "/candles_ibov_" +
 			stock +
 			"_mini_period" +
 			period +
@@ -85,15 +85,6 @@ var readAllFilesAndCross = function(files, periods, callback) {
 	    		
 	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
 
-
-
-	    		/*console.log("\n\n\n\tCruzamento de descida entre %d e %d, em (%d,%d)",
-	    			periods[0], periods[1],
-	    			relativeP[0], parseInt(relativeP[1]*1000)/1000);
-	    		console.log("\n\t   O ponto comparado foi (period%d) (%d,%d)",
-	    			periods[0],
-	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);
-*/
 	    		if(relativeP[1] - lastValue < 0) {
 	    			console.log("\n\t\tPerda por ação: R$%d",  - relativeP[1] + lastValue);
 	    			loses += - relativeP[1] + lastValue;
@@ -110,12 +101,6 @@ var readAllFilesAndCross = function(files, periods, callback) {
 	    		
 	    		relativeP = relativePosition(pn.previous, pn.next, serie1[i]);
 	    		lastValue = relativeP[1];
-	    		/*console.log("\n\n\n\tCruzamento de subida entre %d e %d, em (%d,%d)",
-	    			periods[0], periods[1],
-	    			relativeP[0], parseInt(relativeP[1]*1000)/1000);
-	    		console.log("\n\t   O ponto comparado foi (period%d) (%d,%d)",
-	    			periods[0],
-	    			serie1[i][0], parseInt(serie1[i][1]*1000)/1000);*/
 	    	}
 
 	    	lastIsUp = actualIsUp;
@@ -144,28 +129,38 @@ Controller.index = function(req, res) {
 	}
 
 	var periods = req.query.periods.split(",");
+	var type = req.query.type || "sma";
 	periods.sort(function(a,b){
 		return parseInt(a)-parseInt(b)
 	});
 	var files = [];
 	for(var i = 0; i<periods.length; i++) {
-		files.push(getFileUrl(periods[i], stock));
+		files.push(getFileUrl(periods[i], stock, type));
 
-		console.log("\n\t file: %s", getFileUrl(periods[i], stock));
+		console.log("\n\t file: %s", getFileUrl(periods[i], stock, type));
 	}
 
 	//necessarily, the first results is more volatily than lasts,
 	//because the "periods" are sorted before
 	readAllFilesAndCross(files, periods, function(params) {
-		res.status(params.status || 200).send("Done, check console. Crossings: " + (params.up+params.down));
+		var text = "Done " + type + ", check console. Crossings: " + (params.up+params.down);
+
+		text += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up: " + params.up + ", down: " + params.down + ", cross: " + (params.up+params.down);
+		text += "<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perda total: R$" + params.loses;
+		text += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Erros: " + params.losesCount;
+		text += "<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ganho total: R$" + params.gains;
+		text += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acertos: " + params.gainsCount;
+		text += "<br><br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resultado Final: R$: " + (params.gains-params.loses);
 
 		console.log("\n\n\n\n\n\t\t\tup: %d, down: %d, cross: %d", params.up, params.down, params.up+params.down);
-		
 		console.log("\n\n\t\t\tPerda total: R$%d", params.loses);
+		
 		console.log("\n\t\t\t\tErros: %d", params.losesCount);
 		console.log("\n\t\t\tGanho total: R$%d", params.gains);
 		console.log("\n\t\t\t\tAcertos: %d", params.gainsCount);
 		console.log("\n\t\t\tResultado final: R$%d", params.gains - params.loses);
+		
+		res.status(params.status || 200).send(text);
 	});
 };
 
