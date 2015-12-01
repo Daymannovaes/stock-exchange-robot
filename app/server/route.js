@@ -6,6 +6,8 @@ var Route = function(app, express) {
 	app.use("/public", express.static(__dirname + "/../client"));
 
 	app.get("/", controller.index);
+	app.get("/results", controller.results);
+	app.get("/data", controller.data);
 
 	app.get("/sma", controller.sma.index);
 	app.get("/ema", controller.ema.index);

@@ -13,5 +13,11 @@ var Controller = {
 Controller.index = function(req, res) {
 	res.sendFile("index.html", {root: __dirname + "/../../client"});
 };
+Controller.results = function(req, res) {
+	res.sendFile("results.html", {root: __dirname + "/../../client"});
+};
+Controller.data = function(req, res) {
+	res.sendFile("data.html", {root: __dirname + "/../../client"});
+};
 
 module.exports = Controller;
