@@ -1,7 +1,9 @@
 $(document).ready(function(undefined) {
 	"use strict";
 
-    var stock = "itub4";
+    var Stock = function() {
+        return $("input[name='stock']:checked").val() || "itub4";
+    };
     var normalizeResponses = function(responses) {
         if(typeof responses[2] == "object" && !(responses[2] instanceof Array))
             return [normalizeResponse([responses[0]])];
@@ -20,6 +22,8 @@ $(document).ready(function(undefined) {
     var $filter_ema = $("#filter_ema");
 
     $("#build").click(function() {
+        var stock = Stock();
+
         var periods_sma = $filter_sma.find("input[type='checkbox']:checked");
         var periods_ema = $filter_ema.find("input[type='checkbox']:checked");
 
@@ -39,6 +43,8 @@ $(document).ready(function(undefined) {
     });
     
     $("#search").click(function() {
+        var stock = Stock();
+        
         var periods_sma = $filter_sma.find("input[type='checkbox']:checked");
         var periods_ema = $filter_ema.find("input[type='checkbox']:checked");
 
@@ -52,7 +58,7 @@ $(document).ready(function(undefined) {
         for(var i=0; i<periods_ema.length; i++)
             urls.push($.get(urlBase_ema + periods_ema[i].name + ".txt"));
         if($("#showStock").is(":checked")) {
-            urls.push($.get("public/candles/candles_ibov_itub4_mini_period1.txt"));
+            urls.push($.get("public/candles/candles_ibov_" + stock + "_mini_period1.txt"));
         }
 
         $.when.apply(this, urls).done(function() {
@@ -76,7 +82,7 @@ $(document).ready(function(undefined) {
                 },
 
                 title : {
-                    text : stock
+                    text : Stock()
                 },
                 series : series
             });

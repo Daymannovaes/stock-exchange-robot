@@ -127,6 +127,7 @@ Controller.index = function(req, res) {
 		res.status(400).send("You need to provide the periods (like &periods=20,30,500)");
 			return;
 	}
+	stock = req.query.stock || stock;
 
 	var periods = req.query.periods.split(",");
 	var type = req.query.type || "sma";
