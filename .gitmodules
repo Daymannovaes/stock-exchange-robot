@@ -1,3 +1,3 @@
 [submodule "stock-exchange-robot-presentation"]
 	path = stock-exchange-robot-presentation
-	url = https://github.com/Daymannovaes/stock-exchange-robot-presentation.git
+	url = git@github.com:Daymannovaes/stock-exchange-robot-presentation.git
