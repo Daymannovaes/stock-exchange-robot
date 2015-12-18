@@ -1,0 +1,14 @@
+span.orange {
+  color: #F56727;
+}
+span.yellow {
+  color: rgb(255, 224, 80);
+}
+
+.title {
+  float: left;
+  text-align: left;
+  font-size: 20px !important;
+  text-transform: lowercase;
+  color: rgb(255, 224, 80);
+}

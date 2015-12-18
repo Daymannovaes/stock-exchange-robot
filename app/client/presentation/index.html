@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Stock Exchange Robot Presentation</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<meta name="description" content="A simple Presentation for a simple Javascript Stock Exchange Robot">
+		<meta name="author" content="Dayman Novaes">
+
+		<link rel="stylesheet" href="public/presentation/css/reveal.css">
+		<link rel="stylesheet" href="public/presentation/css/style.css">
+		<link rel="stylesheet" href="public/presentation/css/theme/moon.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="public/presentation/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'public/presentation/css/print/pdf.css' : 'public/presentation/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="public/presentation/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+						<h3>
+							Cruzamento de Médias Móveis para Compra Venda na Bolsa de Valores
+						</h3>
+
+						<h4>
+							<ul>
+								<br>
+								<li>Dayman Novaes</li>
+								<li><a href="mailto:daymannovaes@gmail.com?subject=Apresentação Bolsa de Valores">daymannovaes@gmail.com</a></li>
+								<br>
+								<li>UFMG - Ciência da Computação - <span class="orange">2º periodo</span></li>
+								<li>CEFET - Informática - <span class="orange">2010 - 2014</span></li>
+								<br>
+								<li><a href="https://github.com/daymannovaes">github.com/daymannovaes</a></li>
+								<li><a href="https://linkedin.com/in/daymannovaes">linkedin.com/in/daymannovaes</a></li>
+							</ul>
+						</h4>
+					</section>
+					<section>
+						<h3>
+							Referência
+						</h3>
+						<h4>
+							<ul>
+								<br>
+								<li>
+									Média Móvel Simples - <span class="orange">MMS</span>
+								</li>
+								<li>
+									Média Móvel Exponencial - <span class="orange">MME</span>
+								</li>
+							</ul>
+						</h4>
+					</section>
+				</section><!-- /first slide -->
+
+				<section data-transition="none">
+					<div class="title">Média Móvel</div>
+					<section>
+						<h3>
+							Média Móvel
+						</h3>
+
+						<i>
+							uma sucessão de médias derivada de segmentos sucessivos (tipicamente de tamanho constante) de uma série de valores.
+						</i>
+						<small><a href="https://www.google.com/search?q=define%3Amoving+average" target="_blank">/google.com/</a></small>
+					</section>
+					<section data-transition="none">
+						<h3>
+							Média Móvel Simples
+						</h3>
+
+						<img src="public/presentation/img/sma-example.png">
+
+						<p>
+							É calculada adicionando-se os preços para um número de períodos e dividindo-se esse valor pelo número de períodos. (média simples).
+						</p>
+					</section>
+					<section data-transition="none">
+						<h3>
+							Média Móvel Exponencial
+						</h3>
+
+						<img src="public/presentation/img/ema-example.png">
+
+						<p>
+							Tem o mesmo princípio da média móvel simples, porém a média é ponderada, na qual os últimos valores da média têm maior peso.
+						</p>
+					</section>
+
+					<section data-transition="none">
+						<h3>
+							Cruzamentos
+						</h3>
+
+						<img src="public/presentation/img/sma-cross.png">
+						<img src="public/presentation/img/sma-cross2.png">
+
+					</section>
+				</section><!-- /second slide -->
+
+				<section>
+					<div class="title">Estratégia</div>
+					<section>
+						<h3>
+							Estratégia
+						</h3>
+
+						<p>
+							Consiste em cruzar diferentes médias móveis de diferentes períodos, com um número iguais ou diferente de médias, de mesmo tipo ou diferente.
+						</p>
+						<h4>
+							<ul>
+								<br>
+								<li>
+									MMS de curtos períodos <span class="orange">(20 e 50)</span>
+								</li>
+								<li>
+									MMS de longos períodos <span class="orange">(200 e 500)</span>
+								</li>
+								<li>
+									MMS de períodos diferentes <span class="orange">(20 e 500)</span>
+								</li>
+								<br>
+								<li>
+									O mesmo para MME
+								</li>
+							</ul>
+						</h4>
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							curtos
+						</h3>
+						<img src="public/presentation/img/petr4-20-50.png">
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							longos
+						</h3>
+						<img src="public/presentation/img/petr4-200-500.png">
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							diferentes
+						</h3>
+						<img src="public/presentation/img/petr4-20-500.png">
+					</section>
+					<section>
+						<h3>
+							Tipos de análise
+						</h3>
+						<h4>
+							<ul>
+								<br>
+								<li>
+									<a href="#/5/1">
+										Quantidade de cruzamentos
+									</a>
+								</li>
+								<br>
+								<li>
+									<a href="#/5/2">
+										Ponto de cruzamento
+									</a>
+								</li>
+								<br>
+								<li>
+									<a href="#/5/3">
+										Resultado financeiro
+									</a>
+								</li>
+								<br>
+							</ul>
+						</h4>
+
+						<p>
+							O resultado das análises será mostrado na seção <a href="#/5"><span class="yellow">resultados</span></a>
+						</p>
+					</section>
+				</section><!-- /third slide -->
+
+				<section>
+					<div class="title">Caracterização</div>
+					<section>
+						<h3>
+							Caracterização dos Dados
+						</h3>
+
+						<p>
+							Naturalmente, há certos comportamentos na série temporal que são benéficos à estratégia, e outros que causam prejuízo.
+						</p>
+						<br>
+						<h4>
+							Quais esses comportamentos?
+						</h4>
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							ideal
+						</h3>
+						<img src="public/presentation/img/injury-example.jpg">
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							ideal
+						</h3>
+						<img src="public/presentation/img/profit-example.jpg">
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							"real"
+						</h3>
+						<img src="public/presentation/img/injury-example-real.jpg">
+					</section>
+					<section>
+						<p>
+							Um mercado em alta é bom porque (além de estar em alta), tem grandes chances de cair no segundo caso ideal, no qual um pico rápido causa lucro.
+						</p>
+						<br>
+						<p>
+							Um mercado em baixa é ruim porque (além de estar em baixa), tem grandes chances de cair no primeiro caso ideal, no qual um pico rápido causa prejuízo.
+						</p>
+						<br>
+						<p>
+							Um mercado que oscila sempre em torno de um mesmo ponto (i.e. MMS de longo período) tem zero lucro e zero prejuízo.
+						</p>
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							ideal
+						</h3>
+						<img src="public/presentation/img/swing-example.jpg">
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							up
+						</h3>
+						<img src="public/presentation/img/swing-up-example.jpg">
+					</section>
+					<section data-transition="none">
+						<h3 class="title">
+							down
+						</h3>
+						<img src="public/presentation/img/swing-down-example.jpg">
+					</section>
+				</section><!-- /4th slide -->
+				
+				<section>
+					<div class="title">Estrutura</div>
+					<section>
+						<h3>
+							Estrutura do Projeto
+						</h3>
+					</section>
+				</section><!-- /5th slide -->
+
+				<section>
+					<div class="title">Resultados</div>
+					<section>
+						<h3>
+							Resultados
+						</h3>
+					</section>
+				</section><!-- /6th slide -->
+
+				<section>
+					<div class="title"></div>
+					<section>
+						<h3>
+
+						</h3>
+					</section>
+				</section><!-- /7th slide -->
+
+			</div> <!-- /.slides -->
+
+		</div> <!-- /.reveal -->
+
+		<script src="public/presentation/lib/js/head.min.js"></script>
+		<script src="public/presentation/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'public/presentation/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'public/presentation/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'public/presentation/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'public/presentation/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'public/presentation/plugin/zoom-js/zoom.js', async: true },
+					{ src: 'public/presentation/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
