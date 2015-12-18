@@ -21,7 +21,7 @@
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'public/presentation/css/print/pdf.css' : 'public/presentation/css/print/paper.css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'public/presentation/rcss/print/pdf.css' : 'public/presentation/css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
@@ -181,13 +181,13 @@
 								</li>
 								<br>
 								<li>
-									<a href="#/5/2">
+									<a href="#/5/4">
 										Ponto de cruzamento
 									</a>
 								</li>
 								<br>
 								<li>
-									<a href="#/5/3">
+									<a href="#/5/5">
 										Resultado financeiro
 									</a>
 								</li>
@@ -213,18 +213,18 @@
 						</p>
 						<br>
 						<h4>
-							Quais esses comportamentos?
+							Quais são esses comportamentos?
 						</h4>
 					</section>
 					<section data-transition="none">
 						<h3 class="title">
-							ideal
+							<a href="#/3/7">ideal</a>
 						</h3>
 						<img src="public/presentation/img/injury-example.jpg">
 					</section>
 					<section data-transition="none">
 						<h3 class="title">
-							ideal
+							<a href="#/3/6">ideal</a>
 						</h3>
 						<img src="public/presentation/img/profit-example.jpg">
 					</section>
@@ -252,6 +252,20 @@
 							ideal
 						</h3>
 						<img src="public/presentation/img/swing-example.jpg">
+
+						<a href="#/3/2">
+							<ul>
+								<li></li>
+
+							</ul>
+						</a>
+						<a href="#/3/1">
+							<ul>
+								<li></li>
+
+							</ul>
+						</a>
+						</ul>
 					</section>
 					<section data-transition="none">
 						<h3 class="title">
@@ -273,17 +287,171 @@
 						<h3>
 							Estrutura do Projeto
 						</h3>
+
+						<img src="public/presentation/img/github.png">
+					</section>
+					<section>
+						<h3>
+							Servidor em <a href="https://nodejs.org">Node.js</a>
+						</h3>
+
+						<img src="public/presentation/img/nodejs.png" style="height: 100px;border: 0;">
+					</section>
+					<section>
+						<h3>
+							<img src="public/presentation/img/nodejs.png" style="height: 100px;border: 0;">
+						</h3>
+
+						<p>
+							Node.js é um servidor em JavaScript construido sobre a engine V8 do Chrome.
+						</p>
+						<br>
+						<p>
+							O ecossistema de pacotes do Node.js, (Node Package Manager - <span class="orange">NPM</span>) é o maior ecossistema de bibliotecas de código aberto no mundo.
+						</p>
+					</section>
+					<section>
+						<h3>
+							Client Web
+						</h3>
+
+						<iframe src="http://dayman.io/stock" style="width:100%; min-height:300px"></iframe>
+					</section>
+					<section>
+						<h3>
+							Rotas
+						</h3>
+						<ul>
+							<li>
+								/cross<span class="orange">?periods=20,100&stock=itub4</span>
+							</li>
+							<li>
+								/sma<span class="orange">?stock=itub4&period=30</span>
+							</li>
+							<li>
+								/ema<span class="orange">?stock=petr4&period=200</span>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>
+							/cross<span class="orange">?periods=20,100</span>&<span class="orange">stock=itub4</span>
+						</h3>
+						<img src="public/presentation/img/sma-route-example.png" style="min-height:300px;">
+					</section>
+					<section>
+						<h3>
+							Open Source
+						</h3>
+
+						<h4>
+							<a href="https://github.com/daymannovaes/stock-exchange-robot">
+								github.com/daymannovaes/stock-exchange-robot
+							</a>
+						</h4>
 					</section>
 				</section><!-- /5th slide -->
 
 				<section>
 					<div class="title">Resultados</div>
-					<section>
+					<section data-background="public/presentation/img/stock-exchange-bg.jpg">
 						<h3>
 							Resultados
 						</h3>
 					</section>
+					<section>
+						<h3>
+							Quantidade de cruzamentos
+						</h3>
+
+						<h3 class="title">
+							curto
+						</h3>
+						<img src="public/presentation/img/count-sma-short.png">
+					</section>
+					<section>
+						<img src="public/presentation/img/count-explanation.png">
+					</section>
+					<section>
+						<h3 class="title">
+							longo
+						</h3>
+						<img src="public/presentation/img/count-sma-long.png">
+					</section>
+					<section data-background="public/presentation/img/sma-example-online.jpg">
+						<h3 class="black">
+							Ponto de cruzamento
+						</h3>
+					</section>
+					<section data-background="public/presentation/img/dolar-bg.jpg">
+						<h3 class="blacker">
+							resultado financeiro
+						</h3>
+					</section>
+					<section>
+						<h3 class="title">
+							curto
+						</h3>
+						<img src="public/presentation/img/sma-short.png">
+					</section>
+					<section>
+						<h3 class="title">
+							longo
+						</h3>
+						<img src="public/presentation/img/sma-long.png">
+					</section>
+					<section>
+						<h3 class="title">
+							distantes
+						</h3>
+						<img src="public/presentation/img/sma-far.png">
+					</section>
+					<section>
+						<h3 class="yellow">
+							PETR4
+						</h3>
+						<img src="public/presentation/img/petr4-down-example.png">
+					</section>
+					<section>
+						<h3 class="title">
+							<span class="yellow">PETR4</span>
+						</h3>
+						<img src="public/presentation/img/sma-petr4.png">
+					</section>
 				</section><!-- /6th slide -->
+
+				<section>
+					<div class="title">/daymannovaes</div>
+					<section>
+						<h3>
+							/daymannovaes
+						</h3>
+
+						<ul>
+							<li>
+								@gmail.com
+							</li>
+							<li>
+								linkedin.com/in
+							</li>
+							<li>
+								github.com
+							</li>
+							<li>
+								facebook.com
+							</li>
+							<li>
+								twitter.com
+							</li>
+							<br>
+							<li>
+								<a href="http://dayman.io">
+									dayman.io
+								</a>
+							</li>
+						</ul>
+					</section>
+				</section><!-- /last slide -->
 
 				<section>
 					<div class="title"></div>

@@ -1,7 +1,13 @@
 span.orange {
   color: #F56727;
 }
-span.yellow {
+.black {
+  color: #444 !important;
+}
+.blacker {
+  color: #222 !important;
+}
+.yellow, span.yellow {
   color: rgb(255, 224, 80);
 }
 
